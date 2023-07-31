@@ -70,12 +70,18 @@ t_arg_t	*init_arg(char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_arg_t		*test;
+	t_all_t		test;
 	pthread_t	t1;
+	int			i;
 
-	if (argc < 4)
-		return (1);	
-	test = init_arg(argv);
+	i = 0;
+	if (init(&test, argc, argv)
+			return (1);
+	while (i < test.n_philo)
+	{
+
+		i++;
+	}
 	printf("%ld\n", test->n_philo);
 	pthread_create(&t1, NULL, &routine, NULL);
 	pthread_join(t1, NULL);
