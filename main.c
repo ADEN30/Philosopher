@@ -1,9 +1,14 @@
 #include "philosopher.h"
 
-void	*routine()
+void	*routine(void *data)
 {
-	printf("Test from thread\n");
+	t_thread_t	*p;
 
+	p = (t_thread_t*)data;
+	if (p->id % 2 != 0)
+		printf("Test from thread1\n");
+	else
+		printf("Test from thread2\n");
 	return (0);
 }
 
@@ -71,19 +76,24 @@ t_arg_t	*init_arg(char **argv)
 int	main(int argc, char **argv)
 {
 	t_all_t		test;
-	pthread_t	t1;
 	int			i;
 
 	i = 0;
-	if (init(&test, argc, argv)
+	if (init(&test, argc, argv))
 			return (1);
-	while (i < test.n_philo)
+	while (i < test.arg->n_philo)
 	{
-
+		test.thread[i].id = i;
+		pthread_create(&test.thread[i].pthread_id, NULL, &routine, &test.thread[i]);
 		i++;
 	}
-	printf("%ld\n", test->n_philo);
-	pthread_create(&t1, NULL, &routine, NULL);
-	pthread_join(t1, NULL);
+	i = 0;
+	while (i < test.arg->n_philo)
+	{
+		pthread_mutex_destroy(&test.thread[i].r_mutex);
+		pthread_join(test.thread[i].pthread_id, NULL);
+		i++;
+	}
+	printf("%d\n", test.arg->n_philo);
 	return (0);
 }

@@ -21,8 +21,8 @@ typedef struct t_arg
 typedef struct t_thread
 {
 	int	id;
-	int	pthread_id;
-	int	pthread_death_id;
+	pthread_t	pthread_id;
+	pthread_t	pthread_death_id;
 	pthread_mutex_t	r_mutex;
 	pthread_mutex_t	l_mutex;
 	t_arg_t			r_arg;
@@ -37,4 +37,6 @@ typedef struct	t_all
 	t_arg_t		*arg;
 }	t_all_t;
 
+int	init(t_all_t *data, int argc, char **argv);
+t_arg_t	*init_arg(char **argv);
 #endif
