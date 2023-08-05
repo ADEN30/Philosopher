@@ -1,14 +1,46 @@
 #include "philosopher.h"
 
-void	*routine(void *data)
+/*void	*dd(void *data)
 {
 	t_thread_t	*p;
 
+	p = (t_thread_t *)data;
+}*/
+
+long int	get_time(void)
+{
+	long int	time_start;
+	struct timeval	current_time;
+
+	gettimeofday(&current_time, NULL);
+	time_start = current_time.tv_sec;
+	return (time_start);
+}
+
+void	*routine(void *data)
+{
+	t_thread_t		*p;
+	int				i;
+	//struct timeval	current_time;
+	//long int	end_time;
+	i	=	0;
 	p = (t_thread_t*)data;
 	if (p->id % 2 != 0)
-		printf("Test from thread1\n");
-	else
-		printf("Test from thread2\n");
+	{
+		usleep(5000); /* times to die */
+	}
+	while (i < 10)
+	{
+		pthread_mutex_lock(&p->r_mutex);
+		pthread_mutex_lock(&p->arg->get_time_eat);
+		p->ms_eat = get_time();
+		printf("time : %ld\n", p->ms_eat);
+		printf("%ld Philo %d has taken fork\n", get_time(), p->id);
+		pthread_mutex_unlock(&p->arg->get_time_eat);
+		usleep(5000);
+		pthread_mutex_unlock(&p->r_mutex);
+	//	phtread_datach(p->pthread_death_id);
+	}
 	return (0);
 }
 

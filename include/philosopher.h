@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 typedef struct t_arg
 {
@@ -15,6 +16,7 @@ typedef struct t_arg
 	int				t_to_sleep;
 	long int		n_time_eat;
 	pthread_mutex_t	dead;
+	pthread_mutex_t	get_time_eat;
 } t_arg_t;
 
 
@@ -25,8 +27,7 @@ typedef struct t_thread
 	pthread_t	pthread_death_id;
 	pthread_mutex_t	r_mutex;
 	pthread_mutex_t	l_mutex;
-	t_arg_t			r_arg;
-	t_arg_t			l_arg;
+	t_arg_t			*arg;
 	long int		ms_eat;
 	unsigned int	n_eat;
 }	t_thread_t;
