@@ -17,6 +17,7 @@ typedef struct t_arg
 	long int		n_time_eat;
 	pthread_mutex_t	dead;
 	pthread_mutex_t	get_time_eat;
+	int				finish;
 } t_arg_t;
 
 

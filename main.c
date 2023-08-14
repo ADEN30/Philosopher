@@ -1,11 +1,5 @@
 #include "philosopher.h"
 
-/*void	*dd(void *data)
-{
-	t_thread_t	*p;
-
-	p = (t_thread_t *)data;
-}*/
 
 long int	get_time(void)
 {
@@ -17,29 +11,59 @@ long int	get_time(void)
 	return (time_start);
 }
 
+int	check_death(t_thread_t *data, int s)
+{
+	pthread_mutex_lock(&data->arg->dead);
+	if (s)
+		data->arg->finish = 1;
+	if (data->arg->finish)
+		return (1);
+	pthread_mutex_unlock(&data->arg->dead);
+	return (0);
+}
+
+void	*r_death(void *data)
+{
+	t_thread_t	*p;
+
+	p = (t_thread_t *)data;
+	pthread_mutex_lock(&p->arg->dead);
+	if (!check_death(p, 0) && p->arg->finish && get_time - p->ms_eat >= p->arg->t_to_die)
+	{
+		pthread_mutex_unlock(&p->arg->dead);
+		check_death(p, 1);
+	}
+	pthread_mutex_unlock(&p->arg->dead);
+	return (0);
+}
 void	*routine(void *data)
 {
 	t_thread_t		*p;
 	int				i;
-	//struct timeval	current_time;
-	//long int	end_time;
+	pthread_t		death;
+
 	i	=	0;
 	p = (t_thread_t*)data;
 	if (p->id % 2 != 0)
 	{
-		usleep(5000); /* times to die */
+		usleep(p->arg->t_to_die); /* times to die */
 	}
-	while (i < 10)
+	while (!check_death(p, 0))
 	{
+		pthread_create(&death, NULL, &r_death, p);
+		pthread_mutex_lock(&p->l_mutex);
+		p->arg->n_time_eat++;
 		pthread_mutex_lock(&p->r_mutex);
 		pthread_mutex_lock(&p->arg->get_time_eat);
 		p->ms_eat = get_time();
+		pthread_mutex_unlock(&p->arg->get_time_eat);
 		printf("time : %ld\n", p->ms_eat);
 		printf("%ld Philo %d has taken fork\n", get_time(), p->id);
-		pthread_mutex_unlock(&p->arg->get_time_eat);
 		usleep(5000);
 		pthread_mutex_unlock(&p->r_mutex);
-	//	phtread_datach(p->pthread_death_id);
+		pthread_mutex_unlock(&p->l_mutex);
+		usleep(p->arg->t_to_sleep);
+		pthread_detach(p->pthread_death_id);
 	}
 	return (0);
 }
@@ -82,6 +106,7 @@ void	arg_set(t_arg_t *arg, int nb)
 		arg->t_to_sleep = nb;
 	else if (i == 4)
 		arg->n_time_eat = nb;
+	arg->finish = 0;
 	i++;
 }
 

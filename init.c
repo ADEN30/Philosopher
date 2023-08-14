@@ -5,17 +5,17 @@ int	complete_mutex(int i, t_all_t *data, t_thread_t *thread, pthread_mutex_t *ph
 	if (i == 0)
 	{
 		thread->r_mutex = phil[i + 1];
-		thread->l_mutex = phil[data->arg->n_philo - 1];
+		thread->l_mutex = phil[i];
 	}
 	else if (i == data->arg->n_philo - 1)
 	{
 		thread->r_mutex = phil[0];
-		thread->l_mutex = phil[data->arg->n_philo - 1];
+		thread->l_mutex = phil[i];
 	}
 	else if (i > 0 && i < data->arg->n_philo)
 	{
 		thread->r_mutex = phil[i + 1];
-		thread->l_mutex = phil[i - 1];
+		thread->l_mutex = phil[i];
 	}
 	else
 		return (1);
