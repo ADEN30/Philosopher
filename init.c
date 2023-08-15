@@ -34,6 +34,7 @@ int	send_mutex(t_all_t *data, pthread_mutex_t *phil, pthread_mutex_t *init)
 	}
 	data->arg->dead = init[0];
 	data->arg->get_time_eat = init[1];
+	data->arg->write = init[2];
 	return (0);
 }
 
@@ -47,7 +48,7 @@ int	build_mutex(t_all_t *data)
 	m_phil = malloc(sizeof(pthread_mutex_t) * data->arg->n_philo);
 	if (!m_phil)
 		return (1);
-	m_init = malloc(sizeof(pthread_mutex_t) * 2);
+	m_init = malloc(sizeof(pthread_mutex_t) * 3);
 	if (!m_init)
 		return (1);
 	while (i < data->arg->n_philo)
@@ -56,7 +57,7 @@ int	build_mutex(t_all_t *data)
 		i++;
 	}
 	i = 0;
-	while (i < 2)
+	while (i < 3)
 	{
 		pthread_mutex_init(&m_init[i], NULL);
 		i++;
@@ -77,7 +78,10 @@ int	init(t_all_t *data, int argc, char **argv)
 	thread = malloc(sizeof(t_thread_t) * data->arg->n_philo);
 	data->thread = thread;
 	while (i < data->arg->n_philo)
+	{
+		thread[i].ms_eat = get_time();
 		thread[i++].arg = data->arg;
+	}
 	if (build_mutex(data))
 		return(1);
 	return (0);

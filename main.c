@@ -7,19 +7,35 @@ long int	get_time(void)
 	struct timeval	current_time;
 
 	gettimeofday(&current_time, NULL);
-	time_start = current_time.tv_sec;
+	time_start = current_time.tv_sec * 1000 + current_time.tv_usec / 1000 ;
 	return (time_start);
 }
 
 int	check_death(t_thread_t *data, int s)
 {
 	pthread_mutex_lock(&data->arg->dead);
-	if (s)
+	if (s && !data->arg->finish)
+	{
+		printf("%d died\n", data->id);
 		data->arg->finish = 1;
+	}
 	if (data->arg->finish)
+	{
+		pthread_mutex_unlock(&data->arg->dead);
 		return (1);
+	}
 	pthread_mutex_unlock(&data->arg->dead);
 	return (0);
+}
+
+long int	get_ms_eat(t_thread_t *p)
+{
+	long int eat;
+	
+	pthread_mutex_lock(&p->arg->get_time_eat);
+	eat = p->ms_eat;
+	pthread_mutex_unlock(&p->arg->get_time_eat);
+	return (eat);
 }
 
 void	*r_death(void *data)
@@ -27,44 +43,41 @@ void	*r_death(void *data)
 	t_thread_t	*p;
 
 	p = (t_thread_t *)data;
-	pthread_mutex_lock(&p->arg->dead);
-	if (!check_death(p, 0) && p->arg->finish && get_time - p->ms_eat >= p->arg->t_to_die)
+	while (!check_death(p, 0) && get_time() - get_ms_eat(p) < (long)(p->arg->t_to_die))
 	{
-		pthread_mutex_unlock(&p->arg->dead);
-		check_death(p, 1);
+		usleep(500);
 	}
-	pthread_mutex_unlock(&p->arg->dead);
+	check_death(p, 1);
 	return (0);
 }
 void	*routine(void *data)
 {
 	t_thread_t		*p;
-	int				i;
-	pthread_t		death;
+//	int				i;
 
-	i	=	0;
+//	i	=	0;
 	p = (t_thread_t*)data;
 	if (p->id % 2 != 0)
 	{
-		usleep(p->arg->t_to_die); /* times to die */
+		usleep(p->arg->t_to_eat * 1000); /* times to die */
 	}
+	if (pthread_create(&p->pthread_death_id, NULL, r_death, data))
+		return (0);
 	while (!check_death(p, 0))
 	{
-		pthread_create(&death, NULL, &r_death, p);
+
 		pthread_mutex_lock(&p->l_mutex);
-		p->arg->n_time_eat++;
 		pthread_mutex_lock(&p->r_mutex);
 		pthread_mutex_lock(&p->arg->get_time_eat);
 		p->ms_eat = get_time();
 		pthread_mutex_unlock(&p->arg->get_time_eat);
-		printf("time : %ld\n", p->ms_eat);
 		printf("%ld Philo %d has taken fork\n", get_time(), p->id);
-		usleep(5000);
+		usleep(p->arg->t_to_eat * 1000);
 		pthread_mutex_unlock(&p->r_mutex);
 		pthread_mutex_unlock(&p->l_mutex);
-		usleep(p->arg->t_to_sleep);
-		pthread_detach(p->pthread_death_id);
+		usleep(p->arg->t_to_sleep * 1000);
 	}
+	pthread_join(p->pthread_death_id, NULL);
 	return (0);
 }
 
