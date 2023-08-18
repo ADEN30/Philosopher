@@ -15,6 +15,7 @@ typedef struct t_arg
 	int				t_to_eat;
 	int				t_to_sleep;
 	long int		n_time_eat;
+	long int		t_start;
 	pthread_mutex_t	dead;
 	pthread_mutex_t	get_time_eat;
 	pthread_mutex_t	write;
@@ -43,4 +44,5 @@ typedef struct	t_all
 int	init(t_all_t *data, int argc, char **argv);
 t_arg_t	*init_arg(char **argv);
 long int	get_time(void);
+int	check_death(t_thread_t *data, int s);
 #endif

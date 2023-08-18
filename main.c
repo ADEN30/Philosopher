@@ -11,21 +11,13 @@ long int	get_time(void)
 	return (time_start);
 }
 
-int	check_death(t_thread_t *data, int s)
+void	write_smth(char *str, t_thread_t *p)
 {
-	pthread_mutex_lock(&data->arg->dead);
-	if (s && !data->arg->finish)
-	{
-		printf("%d died\n", data->id);
-		data->arg->finish = 1;
-	}
-	if (data->arg->finish)
-	{
-		pthread_mutex_unlock(&data->arg->dead);
-		return (1);
-	}
-	pthread_mutex_unlock(&data->arg->dead);
-	return (0);
+	long int	time;
+
+	time = get_time() - p->arg->t_start;
+	if (!check_death(p, 0))
+		printf("%ld Philo %d %s\n", time, p->id,  str);
 }
 
 long int	get_ms_eat(t_thread_t *p)
@@ -38,6 +30,46 @@ long int	get_ms_eat(t_thread_t *p)
 	return (eat);
 }
 
+long int	set_ms_eat(t_thread_t *p)
+{
+	long int eat;
+	
+	pthread_mutex_lock(&p->arg->get_time_eat);
+	eat = get_time();
+	pthread_mutex_unlock(&p->arg->get_time_eat);
+	return (eat);
+}
+
+int	check_death(t_thread_t *data, int s)
+{
+	pthread_mutex_lock(&data->arg->dead);
+	if (s && !data->arg->finish)
+	{
+		printf("ok\n");
+		write_smth("died", data);
+		data->arg->finish = 1;
+	}
+	if (data->arg->finish)
+	{
+		pthread_mutex_unlock(&data->arg->dead);
+		return (1);
+	}
+	pthread_mutex_unlock(&data->arg->dead);
+	return (0);
+}
+
+void ft_sleep(long int time, t_thread_t *data)
+{
+	long int time_start;
+
+	time_start = get_time();
+	while (get_time() - time_start < time && !check_death(data, 0))
+	{
+		usleep(1);
+	}
+}
+
+
 void	*r_death(void *data)
 {
 	t_thread_t	*p;
@@ -45,7 +77,7 @@ void	*r_death(void *data)
 	p = (t_thread_t *)data;
 	while (!check_death(p, 0) && get_time() - get_ms_eat(p) < (long)(p->arg->t_to_die))
 	{
-		usleep(500);
+		usleep(100);
 	}
 	check_death(p, 1);
 	return (0);
@@ -59,25 +91,29 @@ void	*routine(void *data)
 	p = (t_thread_t*)data;
 	if (p->id % 2 != 0)
 	{
-		usleep(p->arg->t_to_eat * 1000); /* times to die */
+		usleep(50); /* times to die */
 	}
-	if (pthread_create(&p->pthread_death_id, NULL, r_death, data))
-		return (0);
+	//if (pthread_create(&p->pthread_death_id, NULL, r_death, data))
+	//	return (0);
 	while (!check_death(p, 0))
 	{
 
 		pthread_mutex_lock(&p->l_mutex);
 		pthread_mutex_lock(&p->r_mutex);
-		pthread_mutex_lock(&p->arg->get_time_eat);
-		p->ms_eat = get_time();
-		pthread_mutex_unlock(&p->arg->get_time_eat);
-		printf("%ld Philo %d has taken fork\n", get_time(), p->id);
-		usleep(p->arg->t_to_eat * 1000);
+		write_smth("has taken a fork", p);
+		set_ms_eat(p);
+		write_smth("is eating", p);
+		ft_sleep(p->arg->t_to_eat, p);
 		pthread_mutex_unlock(&p->r_mutex);
 		pthread_mutex_unlock(&p->l_mutex);
-		usleep(p->arg->t_to_sleep * 1000);
+		if (!check_death(p, 0))
+		{
+			write_smth("is sleeping", p);
+			ft_sleep(p->arg->t_to_sleep, p);
+			write_smth("is thinking", p);
+		}
 	}
-	pthread_join(p->pthread_death_id, NULL);
+	//pthread_join(p->pthread_death_id, NULL);
 	return (0);
 }
 
@@ -109,6 +145,7 @@ int	ft_atoi(const char *str)
 void	arg_set(t_arg_t *arg, int nb)
 {
 	static int	i;
+
 	if (i == 0)
 		arg->n_philo = nb;
 	else if (i == 1)
@@ -120,6 +157,7 @@ void	arg_set(t_arg_t *arg, int nb)
 	else if (i == 4)
 		arg->n_time_eat = nb;
 	arg->finish = 0;
+	arg->t_start = get_time();
 	i++;
 }
 
@@ -157,13 +195,27 @@ int	main(int argc, char **argv)
 		pthread_create(&test.thread[i].pthread_id, NULL, &routine, &test.thread[i]);
 		i++;
 	}
+	
+	i = 0;
+	while (!check_death(&test.thread[i], 0) && get_time() - get_ms_eat(&test.thread[i]) < (long)(test.arg->t_to_die))
+	{
+		if (check_death(&test.thread[i], 0))
+			break ;
+		i++;
+		if (i >= test.arg->n_philo - 1)
+			i = 0;
+		usleep(100);
+	}
+	write_smth("died---------", &test.thread[i]);
+	pthread_mutex_lock(&test.arg->dead);
+	test.arg->finish = 1;
+	pthread_mutex_unlock(&test.arg->dead);	
 	i = 0;
 	while (i < test.arg->n_philo)
 	{
-		pthread_mutex_destroy(&test.thread[i].r_mutex);
+		//pthread_mutex_destroy(&test.thread[i].r_mutex);
 		pthread_join(test.thread[i].pthread_id, NULL);
 		i++;
 	}
-	printf("%d\n", test.arg->n_philo);
 	return (0);
 }

@@ -15,7 +15,7 @@ all : $(NAME)
 	fi
 
 $(NAME) : $(OBJ)
-	@$(GCC) -o $(NAME) $(OBJ)
+	@$(GCC) -o $(NAME) -fsanitize=thread $(OBJ)
 
 
 
