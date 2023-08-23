@@ -1,184 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agallet <agallet@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/23 15:56:23 by agallet           #+#    #+#             */
+/*   Updated: 2023/08/23 17:02:36 by agallet          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosopher.h"
 
-
-long int	get_time(void)
+void	clear_data(t_all_t *data)
 {
-	long int	time_start;
-	struct timeval	current_time;
-
-	gettimeofday(&current_time, NULL);
-	time_start = current_time.tv_sec * 1000 + current_time.tv_usec / 1000 ;
-	return (time_start);
-}
-
-void	write_smth(char *str, t_thread_t *p)
-{
-	long int	time;
-
-	time = get_time() - p->arg->t_start;
-	if (!check_death(p, 0))
-		printf("%ld Philo %d %s\n", time, p->id,  str);
-}
-
-long int	get_ms_eat(t_thread_t *p)
-{
-	long int eat;
-	
-	pthread_mutex_lock(&p->arg->get_time_eat);
-	eat = p->ms_eat;
-	pthread_mutex_unlock(&p->arg->get_time_eat);
-	return (eat);
-}
-
-long int	set_ms_eat(t_thread_t *p)
-{
-	long int eat;
-	
-	pthread_mutex_lock(&p->arg->get_time_eat);
-	eat = get_time();
-	pthread_mutex_unlock(&p->arg->get_time_eat);
-	return (eat);
-}
-
-int	check_death(t_thread_t *data, int s)
-{
-	pthread_mutex_lock(&data->arg->dead);
-	if (s && !data->arg->finish)
-	{
-		printf("ok\n");
-		write_smth("died", data);
-		data->arg->finish = 1;
-	}
-	if (data->arg->finish)
-	{
-		pthread_mutex_unlock(&data->arg->dead);
-		return (1);
-	}
-	pthread_mutex_unlock(&data->arg->dead);
-	return (0);
-}
-
-void ft_sleep(long int time, t_thread_t *data)
-{
-	long int time_start;
-
-	time_start = get_time();
-	while (get_time() - time_start < time && !check_death(data, 0))
-	{
-		usleep(1);
-	}
-}
-
-
-void	*r_death(void *data)
-{
-	t_thread_t	*p;
-
-	p = (t_thread_t *)data;
-	while (!check_death(p, 0) && get_time() - get_ms_eat(p) < (long)(p->arg->t_to_die))
-	{
-		usleep(100);
-	}
-	check_death(p, 1);
-	return (0);
-}
-void	*routine(void *data)
-{
-	t_thread_t		*p;
-//	int				i;
-
-//	i	=	0;
-	p = (t_thread_t*)data;
-	if (p->id % 2 != 0)
-	{
-		usleep(50); /* times to die */
-	}
-	//if (pthread_create(&p->pthread_death_id, NULL, r_death, data))
-	//	return (0);
-	while (!check_death(p, 0))
-	{
-
-		pthread_mutex_lock(&p->l_mutex);
-		pthread_mutex_lock(&p->r_mutex);
-		write_smth("has taken a fork", p);
-		set_ms_eat(p);
-		write_smth("is eating", p);
-		ft_sleep(p->arg->t_to_eat, p);
-		pthread_mutex_unlock(&p->r_mutex);
-		pthread_mutex_unlock(&p->l_mutex);
-		if (!check_death(p, 0))
-		{
-			write_smth("is sleeping", p);
-			ft_sleep(p->arg->t_to_sleep, p);
-			write_smth("is thinking", p);
-		}
-	}
-	//pthread_join(p->pthread_death_id, NULL);
-	return (0);
-}
-
-int	ft_atoi(const char *str)
-{
-	size_t	i;
-	size_t	nb;
-	int		negatif;
-
-	i = 0;
-	nb = 0;
-	negatif = 1;
-	while ((str[i] > 8 && str[i] < 14) || str[i] == 32)
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			negatif *= -1;
-		i++;
-	}
-	while (str[i] > 47 && str[i] < 58)
-	{
-		nb = nb * 10 + (str[i] - '0');
-		i++;
-	}
-	return (nb * negatif);
-}
-
-void	arg_set(t_arg_t *arg, int nb)
-{
-	static int	i;
-
-	if (i == 0)
-		arg->n_philo = nb;
-	else if (i == 1)
-		arg->t_to_die = nb;
-	else if (i == 2)
-		arg->t_to_eat = nb;
-	else if (i == 3)
-		arg->t_to_sleep = nb;
-	else if (i == 4)
-		arg->n_time_eat = nb;
-	arg->finish = 0;
-	arg->t_start = get_time();
-	i++;
-}
-
-t_arg_t	*init_arg(char **argv)
-{
-	int		i;
-	t_arg_t	*arg;
-
-	i = 1;
-	arg = malloc(sizeof(t_arg_t));
-	if (!arg)
-		return (NULL);
-	while (argv[i])
-	{
-		if (ft_atoi(argv[i]) == 0)
-			return (NULL);
-		else
-			arg_set(arg, ft_atoi(argv[i]));
-		i++;
-	}
-	return (arg);
+	free(data->arg);
+	free(data->thread);
 }
 
 int	main(int argc, char **argv)
@@ -188,34 +25,22 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	if (init(&test, argc, argv))
-			return (1);
+		return (1);
+	test.arg->t_start = get_time();
 	while (i < test.arg->n_philo)
 	{
 		test.thread[i].id = i;
-		pthread_create(&test.thread[i].pthread_id, NULL, &routine, &test.thread[i]);
+		pthread_create(&test.thread[i].pthread_id, NULL,
+			&routine, &test.thread[i]);
 		i++;
 	}
-	
-	i = 0;
-	while (!check_death(&test.thread[i], 0) && get_time() - get_ms_eat(&test.thread[i]) < (long)(test.arg->t_to_die))
-	{
-		if (check_death(&test.thread[i], 0))
-			break ;
-		i++;
-		if (i >= test.arg->n_philo - 1)
-			i = 0;
-		usleep(100);
-	}
-	write_smth("died---------", &test.thread[i]);
-	pthread_mutex_lock(&test.arg->dead);
-	test.arg->finish = 1;
-	pthread_mutex_unlock(&test.arg->dead);	
 	i = 0;
 	while (i < test.arg->n_philo)
 	{
-		//pthread_mutex_destroy(&test.thread[i].r_mutex);
-		pthread_join(test.thread[i].pthread_id, NULL);
+		pthread_detach(test.thread[i].pthread_id);
 		i++;
 	}
+	r_death(&test);
+	clear_data(&test);
 	return (0);
 }

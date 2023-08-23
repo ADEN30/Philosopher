@@ -1,0 +1,289 @@
+1 Philo 0 has taken a fork
+1 Philo 0 has taken a fork
+1 Philo 0 is eating
+1 Philo 2 has taken a fork
+1 Philo 2 has taken a fork
+1 Philo 2 is eating
+1 Philo 4 has taken a fork
+1 Philo 4 has taken a fork
+1 Philo 4 is eating
+1 Philo 6 has taken a fork
+1 Philo 6 has taken a fork
+1 Philo 6 is eating
+1 Philo 8 has taken a fork
+1 Philo 8 has taken a fork
+1 Philo 8 is eating
+1 Philo 10 has taken a fork
+1 Philo 10 has taken a fork
+1 Philo 10 is eating
+1 Philo 12 has taken a fork
+1 Philo 12 has taken a fork
+1 Philo 12 is eating
+1 Philo 14 has taken a fork
+1 Philo 14 has taken a fork
+1 Philo 14 is eating
+1 Philo 16 has taken a fork
+1 Philo 16 has taken a fork
+1 Philo 16 is eating
+1 Philo 18 has taken a fork
+1 Philo 18 has taken a fork
+1 Philo 18 is eating
+1 Philo 20 has taken a fork
+1 Philo 20 has taken a fork
+1 Philo 20 is eating
+1 Philo 24 has taken a fork
+1 Philo 24 has taken a fork
+1 Philo 24 is eating
+1 Philo 26 has taken a fork
+1 Philo 26 has taken a fork
+1 Philo 26 is eating
+1 Philo 22 has taken a fork
+1 Philo 22 has taken a fork
+1 Philo 22 is eating
+1 Philo 28 has taken a fork
+1 Philo 28 has taken a fork
+1 Philo 28 is eating
+1 Philo 30 has taken a fork
+1 Philo 30 has taken a fork
+1 Philo 30 is eating
+2 Philo 32 has taken a fork
+2 Philo 32 has taken a fork
+2 Philo 32 is eating
+2 Philo 34 has taken a fork
+2 Philo 34 has taken a fork
+2 Philo 34 is eating
+2 Philo 36 has taken a fork
+2 Philo 36 has taken a fork
+2 Philo 36 is eating
+2 Philo 48 has taken a fork
+2 Philo 48 has taken a fork
+2 Philo 48 is eating
+2 Philo 44 has taken a fork
+2 Philo 44 has taken a fork
+2 Philo 44 is eating
+2 Philo 46 has taken a fork
+2 Philo 46 has taken a fork
+2 Philo 46 is eating
+2 Philo 52 has taken a fork
+2 Philo 52 has taken a fork
+2 Philo 52 is eating
+2 Philo 43 has taken a fork
+2 Philo 39 has taken a fork
+2 Philo 39 has taken a fork
+2 Philo 39 is eating
+2 Philo 55 has taken a fork
+2 Philo 55 has taken a fork
+2 Philo 55 is eating
+2 Philo 57 has taken a fork
+2 Philo 57 has taken a fork
+2 Philo 57 is eating
+2 Philo 41 has taken a fork
+2 Philo 41 has taken a fork
+2 Philo 41 is eating
+2 Philo 64 has taken a fork
+2 Philo 64 has taken a fork
+2 Philo 64 is eating
+2 Philo 61 has taken a fork
+2 Philo 61 has taken a fork
+2 Philo 61 is eating
+2 Philo 50 has taken a fork
+2 Philo 50 has taken a fork
+2 Philo 50 is eating
+3 Philo 54 has taken a fork
+3 Philo 72 has taken a fork
+3 Philo 72 has taken a fork
+3 Philo 72 is eating
+3 Philo 67 has taken a fork
+3 Philo 67 has taken a fork
+3 Philo 67 is eating
+3 Philo 60 has taken a fork
+3 Philo 74 has taken a fork
+3 Philo 74 has taken a fork
+3 Philo 74 is eating
+3 Philo 59 has taken a fork
+3 Philo 76 has taken a fork
+3 Philo 76 has taken a fork
+3 Philo 76 is eating
+3 Philo 66 has taken a fork
+3 Philo 63 has taken a fork
+3 Philo 70 has taken a fork
+3 Philo 70 has taken a fork
+3 Philo 70 is eating
+3 Philo 69 has taken a fork
+3 Philo 78 has taken a fork
+3 Philo 78 has taken a fork
+3 Philo 78 is eating
+3 Philo 80 has taken a fork
+3 Philo 80 has taken a fork
+3 Philo 80 is eating
+3 Philo 82 has taken a fork
+3 Philo 82 has taken a fork
+3 Philo 82 is eating
+3 Philo 84 has taken a fork
+3 Philo 84 has taken a fork
+3 Philo 84 is eating
+4 Philo 91 has taken a fork
+4 Philo 91 has taken a fork
+4 Philo 91 is eating
+4 Philo 95 has taken a fork
+4 Philo 95 has taken a fork
+4 Philo 95 is eating
+4 Philo 104 has taken a fork
+4 Philo 104 has taken a fork
+4 Philo 104 is eating
+4 Philo 110 has taken a fork
+4 Philo 110 has taken a fork
+4 Philo 110 is eating
+4 Philo 38 has taken a fork
+4 Philo 109 has taken a fork
+4 Philo 90 has taken a fork
+4 Philo 86 has taken a fork
+4 Philo 86 has taken a fork
+4 Philo 86 is eating
+4 Philo 113 has taken a fork
+4 Philo 113 has taken a fork
+4 Philo 113 is eating
+4 Philo 108 has taken a fork
+4 Philo 106 has taken a fork
+4 Philo 106 has taken a fork
+4 Philo 106 is eating
+4 Philo 100 has taken a fork
+4 Philo 100 has taken a fork
+4 Philo 100 is eating
+4 Philo 98 has taken a fork
+4 Philo 98 has taken a fork
+4 Philo 98 is eating
+4 Philo 102 has taken a fork
+4 Philo 102 has taken a fork
+4 Philo 102 is eating
+4 Philo 112 has taken a fork
+4 Philo 88 has taken a fork
+4 Philo 88 has taken a fork
+4 Philo 88 is eating
+4 Philo 94 has taken a fork
+4 Philo 97 has taken a fork
+5 Philo 93 has taken a fork
+5 Philo 116 has taken a fork
+5 Philo 116 has taken a fork
+5 Philo 116 is eating
+5 Philo 118 has taken a fork
+5 Philo 118 has taken a fork
+5 Philo 118 is eating
+5 Philo 120 has taken a fork
+5 Philo 120 has taken a fork
+5 Philo 120 is eating
+5 Philo 115 has taken a fork
+5 Philo 126 has taken a fork
+5 Philo 126 has taken a fork
+5 Philo 126 is eating
+5 Philo 128 has taken a fork
+5 Philo 128 has taken a fork
+5 Philo 128 is eating
+5 Philo 122 has taken a fork
+5 Philo 122 has taken a fork
+5 Philo 122 is eating
+5 Philo 124 has taken a fork
+5 Philo 124 has taken a fork
+5 Philo 124 is eating
+5 Philo 132 has taken a fork
+5 Philo 132 has taken a fork
+5 Philo 132 is eating
+5 Philo 131 has taken a fork
+5 Philo 130 has taken a fork
+5 Philo 134 has taken a fork
+5 Philo 134 has taken a fork
+5 Philo 134 is eating
+6 Philo 136 has taken a fork
+6 Philo 136 has taken a fork
+6 Philo 136 is eating
+6 Philo 138 has taken a fork
+6 Philo 138 has taken a fork
+6 Philo 138 is eating
+6 Philo 140 has taken a fork
+6 Philo 140 has taken a fork
+6 Philo 140 is eating
+6 Philo 143 has taken a fork
+6 Philo 143 has taken a fork
+6 Philo 143 is eating
+6 Philo 146 has taken a fork
+6 Philo 146 has taken a fork
+6 Philo 146 is eating
+6 Philo 148 has taken a fork
+6 Philo 148 has taken a fork
+6 Philo 148 is eating
+6 Philo 142 has taken a fork
+6 Philo 145 has taken a fork
+6 Philo 150 has taken a fork
+6 Philo 150 has taken a fork
+6 Philo 150 is eating
+6 Philo 152 has taken a fork
+6 Philo 152 has taken a fork
+6 Philo 152 is eating
+7 Philo 154 has taken a fork
+7 Philo 154 has taken a fork
+7 Philo 154 is eating
+7 Philo 158 has taken a fork
+7 Philo 158 has taken a fork
+7 Philo 158 is eating
+7 Philo 156 has taken a fork
+7 Philo 156 has taken a fork
+7 Philo 156 is eating
+7 Philo 170 has taken a fork
+7 Philo 170 has taken a fork
+7 Philo 170 is eating
+7 Philo 163 has taken a fork
+7 Philo 163 has taken a fork
+7 Philo 163 is eating
+8 Philo 167 has taken a fork
+8 Philo 167 has taken a fork
+8 Philo 167 is eating
+8 Philo 178 has taken a fork
+8 Philo 178 has taken a fork
+8 Philo 178 is eating
+8 Philo 160 has taken a fork
+8 Philo 160 has taken a fork
+8 Philo 160 is eating
+8 Philo 176 has taken a fork
+8 Philo 176 has taken a fork
+8 Philo 176 is eating
+8 Philo 162 has taken a fork
+8 Philo 188 has taken a fork
+8 Philo 188 has taken a fork
+8 Philo 188 is eating
+8 Philo 166 has taken a fork
+8 Philo 182 has taken a fork
+8 Philo 182 has taken a fork
+8 Philo 182 is eating
+8 Philo 172 has taken a fork
+8 Philo 172 has taken a fork
+8 Philo 172 is eating
+8 Philo 180 has taken a fork
+8 Philo 180 has taken a fork
+8 Philo 180 is eating
+9 Philo 174 has taken a fork
+9 Philo 174 has taken a fork
+9 Philo 174 is eating
+9 Philo 194 has taken a fork
+9 Philo 194 has taken a fork
+9 Philo 194 is eating
+9 Philo 165 has taken a fork
+9 Philo 169 has taken a fork
+9 Philo 184 has taken a fork
+9 Philo 184 has taken a fork
+9 Philo 184 is eating
+9 Philo 198 has taken a fork
+9 Philo 198 has taken a fork
+9 Philo 198 is eating
+9 Philo 197 has taken a fork
+9 Philo 196 has taken a fork
+9 Philo 186 has taken a fork
+9 Philo 186 has taken a fork
+9 Philo 186 is eating
+9 Philo 190 has taken a fork
+9 Philo 190 has taken a fork
+9 Philo 190 is eating
+9 Philo 192 has taken a fork
+9 Philo 192 has taken a fork
+9 Philo 192 is eating
+0
+201 Philo 23 is died

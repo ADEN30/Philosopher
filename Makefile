@@ -1,8 +1,13 @@
 GCC = gcc -pthread -Wall -Wextra -Werror
-SRC = main.c init.c
+SRC = main.c\
+	  init.c\
+	  death.c\
+	  parse.c\
+	  threads.c\
+	  utils.c
 OBJ = $(SRC:.c=.o)
 HEADER = -I./include -I./usr/include/linux/types.h
-NAME = philosopher
+NAME = philo
 
 %.o : %.c
 	$(GCC) $(HEADER) -c $< -o $@
@@ -15,7 +20,7 @@ all : $(NAME)
 	fi
 
 $(NAME) : $(OBJ)
-	@$(GCC) -o $(NAME) -fsanitize=thread $(OBJ)
+	@$(GCC) -o $(NAME) $(OBJ)
 
 
 

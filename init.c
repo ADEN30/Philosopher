@@ -1,20 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agallet <agallet@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/23 16:19:34 by agallet           #+#    #+#             */
+/*   Updated: 2023/08/23 18:17:12 by agallet          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosopher.h"
 
-int	complete_mutex(int i, t_all_t *data, t_thread_t *thread, pthread_mutex_t *phil)
+int	complete_mutex(int i, t_all_t *data,
+	t_thread_t *thread, pthread_mutex_t *phil)
 {
 	if (i == 0)
 	{
-		thread->r_mutex = phil[i + 1];
+		thread->r_mutex = &data->thread[i + 1].l_mutex;
 		thread->l_mutex = phil[i];
 	}
-	else if (i == data->arg->n_philo - 1)
+	if (i == data->arg->n_philo - 1)
 	{
-		thread->r_mutex = phil[0];
+		thread->r_mutex = &data->thread[0].l_mutex;
 		thread->l_mutex = phil[i];
 	}
-	else if (i > 0 && i < data->arg->n_philo)
+	else if (i >= 0 && i < data->arg->n_philo)
 	{
-		thread->r_mutex = phil[i + 1];
+		thread->r_mutex = &data->thread[i + 1].l_mutex;
 		thread->l_mutex = phil[i];
 	}
 	else
@@ -35,12 +48,15 @@ int	send_mutex(t_all_t *data, pthread_mutex_t *phil, pthread_mutex_t *init)
 	data->arg->dead = init[0];
 	data->arg->get_time_eat = init[1];
 	data->arg->write = init[2];
+	data->arg->get_n_eat = init[3];
+	free(phil);
+	free(init);
 	return (0);
 }
 
 int	build_mutex(t_all_t *data)
 {
-	int	i;
+	int				i;
 	pthread_mutex_t	*m_phil;
 	pthread_mutex_t	*m_init;
 
@@ -48,16 +64,16 @@ int	build_mutex(t_all_t *data)
 	m_phil = malloc(sizeof(pthread_mutex_t) * data->arg->n_philo);
 	if (!m_phil)
 		return (1);
-	m_init = malloc(sizeof(pthread_mutex_t) * 3);
+	m_init = malloc(sizeof(pthread_mutex_t) * 4);
 	if (!m_init)
 		return (1);
 	while (i < data->arg->n_philo)
 	{
-		pthread_mutex_init(&m_phil[i], NULL); 
+		pthread_mutex_init(&m_phil[i], NULL);
 		i++;
 	}
 	i = 0;
-	while (i < 3)
+	while (i < 4)
 	{
 		pthread_mutex_init(&m_init[i], NULL);
 		i++;
@@ -80,9 +96,10 @@ int	init(t_all_t *data, int argc, char **argv)
 	while (i < data->arg->n_philo)
 	{
 		thread[i].ms_eat = get_time();
+		thread[i].n_eat = 0;
 		thread[i++].arg = data->arg;
 	}
 	if (build_mutex(data))
-		return(1);
+		return (1);
 	return (0);
 }
