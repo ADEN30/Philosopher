@@ -6,7 +6,7 @@
 /*   By: agallet <agallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:17:13 by agallet           #+#    #+#             */
-/*   Updated: 2023/08/23 18:20:51 by agallet          ###   ########.fr       */
+/*   Updated: 2023/08/26 10:34:05 by agallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	check_death(t_thread_t *data, int s)
 
 void	r_death1(t_all_t *p, int *index, int *all)
 {
-	printf("%d\n", *all);
 	if (*all == p->arg->n_philo)
 	{
 		pthread_mutex_lock(&p->arg->write);
@@ -43,6 +42,7 @@ void	r_death1(t_all_t *p, int *index, int *all)
 		write_smth("is died", &p->thread[*index]);
 		pthread_mutex_unlock(&p->arg->write);
 	}
+	check_death(&p->thread[*index], 1);
 }
 
 void	r_death(t_all_t *p)
@@ -58,7 +58,8 @@ void	r_death(t_all_t *p)
 			&& (get_time() - get_ms_eat(&p->thread[i]))
 			> (long)(p->arg->t_to_die))
 			break ;
-		if (get_n_eat(&p->thread[i]) && p->thread[i].n_eat == p->arg->n_time_eat)
+		if (p->arg->n_time_eat
+			&& get_n_eat(&p->thread[i]) == p->arg->n_time_eat)
 			all_eating++;
 		if (all_eating == p->arg->n_philo)
 			break ;
@@ -71,5 +72,4 @@ void	r_death(t_all_t *p)
 		usleep(100);
 	}
 	r_death1(p, &i, &all_eating);
-	check_death(&p->thread[i], 1);
 }

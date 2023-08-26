@@ -6,7 +6,7 @@
 /*   By: agallet <agallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:19:34 by agallet           #+#    #+#             */
-/*   Updated: 2023/08/23 18:17:12 by agallet          ###   ########.fr       */
+/*   Updated: 2023/08/25 11:23:39 by agallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ int	init(t_all_t *data, int argc, char **argv)
 	if (argc < 4)
 		return (1);
 	data->arg = init_arg(argv);
+	if (!data->arg)
+	{
+		printf("Arguent invalide\n");
+		return (1);
+	}
 	thread = malloc(sizeof(t_thread_t) * data->arg->n_philo);
 	data->thread = thread;
 	while (i < data->arg->n_philo)

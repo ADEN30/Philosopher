@@ -20,22 +20,17 @@ all : $(NAME)
 	fi
 
 $(NAME) : $(OBJ)
-	@$(GCC) -o $(NAME) $(OBJ)
-
-
-
+	@$(GCC) -o  $(NAME) $(OBJ) #-fsanitize=thread
 
 clean :
-	@rm $(OBJ)
+	@rm -f $(OBJ)
 	@echo "\033[1;32mClean Philosopher!\033[0m"
 
-fclean :
-	@rm $(OBJ)
-	@rm $(NAME)
+fclean:
+	@rm -f $(OBJ)
+	@rm -f $(NAME)
 	@echo "\033[1;32mFclean Philosopher !\033[0m"
 
-re :
-	fclean
-	all
+re : fclean all
 
-.PHONY : all clean fclean re
+.PHONY: all clean fclean re

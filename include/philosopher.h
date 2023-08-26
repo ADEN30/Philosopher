@@ -6,7 +6,7 @@
 /*   By: agallet <agallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:27:14 by agallet           #+#    #+#             */
-/*   Updated: 2023/08/23 18:16:39 by agallet          ###   ########.fr       */
+/*   Updated: 2023/08/25 11:18:48 by agallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void		r_death1(t_all_t *p, int *index, int *all);
 void		r_death(t_all_t *p);
 
 int			ft_atoi(const char *str);
-void		arg_set(t_arg_t *arg, int nb);
+int			arg_set(t_arg_t *arg, int nb);
 t_arg_t		*init_arg(char **argv);
 
 long int	get_time(void);
